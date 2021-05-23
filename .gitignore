@@ -6,3 +6,4 @@ _site
 .DS_Store
 *~
 temp
+.jekyll-cache
