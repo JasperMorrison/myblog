@@ -98,8 +98,6 @@ OKS使用多个维度信息进行度量：
 
 ## Test
 
-（先贴Test，Demo放最后，Demo问题比较多）
-
 为了简单，修改数据集中的 person_keypoints_val2017.json，只保留一张图像。
 
 `python tools/test.py --cfg experiments/coco/resnet/res50_256x192_d256x3_adam_lr1e-3.yaml`
@@ -295,23 +293,27 @@ def affine_transform(pt, t):
 
 ## Demo
 
+在对应的yaml中修改TEST.MODEL_FILE，指向models/下面的model文件。
+
+demo/demo.py 中修正drawbox函数。
+
 `python demo/demo.py --cfg experiments/coco/resnet/res50_256x192_d256x3_adam_lr1e-3.yaml --image test_data/000011.jpg --write`
 
-先使用Faster-RCNN检测人体，再使用仿射变换提取人体目标，送入SimplePose进行关键点检测。
-
-得到的结果并不准确。
-
-（待补充）
+流程：  
+先使用Faster-RCNN检测人体，再使用仿射变换提取人体目标，送入SimplePose进行关键点检测。  
+完成后将关键点仿射变换到原图相对位置，画框，画关键点。
 
 ## Demo改造
 
 本节是为了快速接入工程，对Demo进行改造，做到 检测人体框 -> 截图 -> 获取关键点 -> 关键点处理，  
 既可以接收整图，也可以接收单独的人体目标图像，来获得关键点。  
 
-（待补充）
+demo/demo.py添加 --images_dir 命令行参数，并使用glob.glob读取文件夹图像。  
+将从读取文件到保存图片的整个流程整理到一个函数中，如run_reference。  
+从video/image/images_dir获得文件路径都传入到run_reference。
 
 ## 总结
 
-学习SimplePose是一个入门姿势估计的好方法，简单实用，网络实现不复杂，容易落地。
+学习SimplePose（这里指Resnet/HRNet实现的Pose Estimation）是一个入门姿势估计的好方法，简单实用，网络实现不复杂，容易落地。
 
 SimplePose中的仿射变换实现了等比例缩放的目的，将旋转、缩放、等比例、平移等一系列动作用变换来实现，是一种比较好的做法。
