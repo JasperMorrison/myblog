@@ -27,6 +27,28 @@ author: Jasper
 
 通常被接受的说法是，目标函数被训练为，将正样本的计算结果尽可能的靠近正样本。除此以外，模型被优化为尽可能地可以泛化到新的样本上。这就表面，最好是训练一个泛化能力强的模型（generalize well），然而，训练泛化能力强的模型的方法所需要的信息不是那么容易获得。当我们将大模型蒸馏到小模型上时，小模型能够以大模型同样的方式进行泛化（generalize），它很可能比基于标注样本进行直接训练的泛化能力更强。
 
-从大模型蒸馏出小模型，一种可行方法是使用 soft class probabilities（这个概率信息来自大模型），称为“soft targets”。可以使用相同的数据集，也可以使用子集来进行蒸馏。当soft target拥有高德信息熵时，能比hard target提供更多的信息，在梯度中拥有更低的方差，因此，小模型可以使用更少的数据和更大的学习率。（这里的soft target和hard target，区别在于在计算softmax时，有没有除T，除T后曲线更平滑，方差更小，能保留更多信息）
+从大模型蒸馏出小模型，一种可行方法是使用 soft class probabilities（这个概率信息来自大模型），称为“soft targets”。可以使用相同的数据集，也可以使用子集来进行蒸馏。当soft target拥有高的信息熵时，能比hard target提供更多的信息，在梯度中拥有更低的方差，因此，小模型可以使用更少的数据和更大的学习率。（这里的soft target和hard target，区别在于在计算softmax时，有没有除T，除T后曲线更平滑，方差更小，能保留更多信息）
+
+就像MNIST，模型的结果往往给正确的结果以很高的confidence，但仍然有很多信息隐藏在非常小概率值的信息中，这体现在softtarget函数。比如数字2，会给予非常低的概率值使得它属于数字3和数字7。这个低概率信息是非常有用的，比如，至少，我们知道哪个2更像3，哪个2更像7。但是这个小概率值对交叉熵损失的贡献极小，因为它们基本很接近0。即使它们很有用，但太小终究是个问题，因为我们获取和利用它们。Caruana and his collaborators 另辟蹊径，他们直接使用logits (the inputs to the final softmax)，而不是softmax函数产生的概率值来进行蒸馏，目标函数是最小化大模型与小模型的logits平方距离。而，我们则使用soft targets。
+
+迁移数据集（蒸馏数据集），可以是unlabeled data，也可以是训练阶段使用的train data。我们发现，使用train data效果更好，尤其是我们在目标函数中添加一个small term。（此small term即能使得小模型更积极地预测正例，同时能很好地匹配大模型的soft targets）
+
+# Distillation
+
+![](/images/AI/distillation_probability.png)
+
+Zi：输出层的logits
+Pi：logits经过softmax后的概率值
+T：a temperature，起到平滑softmax的作用
+
+训练和蒸馏阶段，T被设置得很高，一旦完成蒸馏，小模型的T被设置为1.
+
+带T的softmax称为soft targets，T==1表示hard targets。hard targets 与 soft targats 正好相差1/T^2倍。
+
+![](/images/AI/distillation_loss.png)
+
+直接将蒸馏的损失（梯度）定义为两个概率值的差值，并当T很大时，损失正好等于logits差值/(NT^2)。
+
+
 
 （进行中。。。）
