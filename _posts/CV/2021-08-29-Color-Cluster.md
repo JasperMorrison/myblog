@@ -208,7 +208,7 @@ color_mean_shift(img_raw, use_hsv=True, only_h=False, bandwidth=20)
 
 # 8. 代码
 
-见： [Color-Cluster](/codes/CV/Color-Cluster/)
+见： [Color-Cluster](https://github.com/JasperMorrison/myblog/tree/master/codes/CV/Color-Cluster)
 
 # 9. 参考
 
