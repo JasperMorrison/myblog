@@ -13,7 +13,7 @@ author: Jasper
 
 
 
-# 现有方法
+# 1. 现有方法
 
 1. 对目标区域计算颜色均值；
 2. 使用神经网络直接进行颜色分类，类别设定为主要的几种颜色；
@@ -25,18 +25,19 @@ author: Jasper
 首先，将图像标定一种主色，得出一个RGB标签；再者，定制神经网络，输出RGB值；最后，loss函数是RGB的余弦误差。详情略。  
 它最重要的缺点是：标注成本太高。
 
-# 新思路介绍
+# 2. 新思路介绍
 
 仍然是把颜色分析当做回归问题，颜色的渐变是一个线性的过程，不同的光照，环境色温的影响，导致的变化也都可以认为是线性的。
 
-问题的目标变成：统计某段颜色的像素分布。
+问题的目标变成：统计某段颜色的像素分布，统计该段颜色范围内像素的个数，像素最多的该段颜色为主要颜色。
 
-为了简单，仅统计范围颜色之内的像素的数量，聚类正好可以达到这个目的。由于是识别，具体的颜色类别数量是无法确定的，MeanShift正好满足需求。
+为了简单，仅统计范围颜色之内的像素的数量，聚类正好可以达到这个目的。  
+由于是识别，具体的颜色类别数量是无法确定的，MeanShift正好满足需求，不像K-means一样需要指定一个类别总数K。
 
 颜色模型中，可以使用RGB、HSV两种模型进行聚类。RGB的颜色线性关系中，分段性不明显，MeanShift带宽参数不好确定。  
 HSV分段较明显，MeanShift带宽可以根据H通道进行设定，缺点是，由于SV范围比较宽，同一个带宽参数无法适应H和SV。
 
-# sklearn Meanshift 接口说明
+# 3. sklearn Meanshift 接口说明
 
 ```python
     ms = MeanShift(bandwidth=bandwidth).fit(x)
@@ -50,7 +51,7 @@ cluster_centers_：聚类的结果，表示中心点，表征了具体的类别�
 
 比如 x 是一系列的RGB值，元素是3D数据，x是2D数据。labels_表示每一个像素点的类别id，cluster_centers_表示最终的分类结果。
 
-# 代码实现
+# 4. 代码实现
 
 ```python
 img_file = "8_out.jpg"
@@ -149,7 +150,7 @@ color_mean_shift(img_raw, use_hsv=True, only_h=False, bandwidth=20)
 4. 样本点分为：RGB、HSV、独立的H通道，共3种情况；
 5. 对比三种情况的聚类结果。
 
-# 聚类结果展示
+# 5. 聚类结果展示
 
 ![](/images/CV/color-cluter-box.jpg)
 
@@ -181,7 +182,7 @@ color_mean_shift(img_raw, use_hsv=True, only_h=False, bandwidth=20)
 
 所以，推荐使用独立H通道模型，附加RGB模型应对黑、白、灰三种颜色。
 
-# 服装颜色聚类
+# 6. 服装颜色聚类
 
 在项目上，我们可以使用服装分割模型对人体目标进行分割，提取服装区域。然后使用聚类，获得类别，从而达到识别服装颜色的目的。
 
@@ -195,7 +196,7 @@ color_mean_shift(img_raw, use_hsv=True, only_h=False, bandwidth=20)
 
 三种建模方式，都能正确识别为红色服装。
 
-# 特殊情况说明
+# 7. 特殊情况说明
 
 使用RGB、HSV可以明确聚类出所有的颜色值，但是单纯使用H通道则不行。在HSV颜色模型中，黑色、白色、灰色的H通道都是非常宽的。
 
@@ -205,11 +206,11 @@ color_mean_shift(img_raw, use_hsv=True, only_h=False, bandwidth=20)
 
 当单独使用H通道时，必须先判断黑、白、灰。简单的做法是，先进行HSV聚类，如果分类落在它们之间，判定颜色为其中之一。否则，再使用H通道进行聚类。
 
-# 代码
+# 8. 代码
 
 见： [Color-Cluster](/codes/CV/Color-Cluster/)
 
-# 参考
+# 9. 参考
 
 sklearn-MeanShift  
 OpenCV-GrabCut  
