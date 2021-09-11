@@ -22,6 +22,8 @@ TensorRT是NVIDIA为加速NVIDIA平台GPUs的模型推理而开发的一个lib�
 
 # TensorRT如何实现优化
 
+![](../../images/NVIDIA/trt-optimization-2.jpeg)
+
 共有5个方面。
 
 ## 模型量化
