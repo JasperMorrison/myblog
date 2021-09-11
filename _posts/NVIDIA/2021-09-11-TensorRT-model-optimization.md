@@ -36,7 +36,7 @@ INT8的精度下降实在是太多了，[-127 to +127]的参数值范围造成�
 
 ![INT8量化](/images/NVIDIA/trt-optimization-1.jpeg)
 
-首先，我们假设进行盲目的缩放操作，将-|max| and |max| in FP32 映射到 INT8 -127 and 127，像上图左边的映射示例。经验发现，这样的映射对准确度的影响仍然过大。但就像FP32截断到FP16一样，也许我们不用直接从FP32映射，而是选择一个较低的阈值。就像上图的右边部分，选择一个比FP32-max更小的值T，从[-T, +T]映射即可。我们使用[KL散度](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence)来找到这个值T，使得映射之后的分布与原始分布的差异最小。
+首先，我们假设进行盲目的缩放操作，将`-|max| and |max| in FP32` 映射到 `INT8 -127 and 127`，像上图左边的映射示例。经验发现，这样的映射对准确度的影响仍然过大。但就像FP32截断到FP16一样，也许我们不用直接从FP32映射，而是选择一个较低的阈值。就像上图的右边部分，选择一个比FP32-max更小的值T，从`[-T, +T]`映射即可。我们使用[KL散度](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence)来找到这个值T，使得映射之后的分布与原始分布的差异最小。
 
 **校准数据**
 
