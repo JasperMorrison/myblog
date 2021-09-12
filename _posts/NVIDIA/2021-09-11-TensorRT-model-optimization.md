@@ -66,3 +66,6 @@ TRT在进行模型推理时，只有在用到Tensor时才进行内存申请，�
 
 后面是TF-TRT的使用介绍，略。
 
+# 参考
+
+[Understanding Nvidia TensorRT for deep learning model optimization](https://medium.com/@abhaychaturvedi_72055/understanding-nvidias-tensorrt-for-deep-learning-model-optimization-dad3eb6b26d9)
