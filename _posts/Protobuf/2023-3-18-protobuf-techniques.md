@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Protobuf（三）技术探讨
+title: Protobuf（三）：技术探讨
 categories: Protobuf 
 tags: Protobuf RPC gRPC
 author: Jasper
