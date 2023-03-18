@@ -15,7 +15,7 @@ author: Jasper
 
 # 编码表
 
-```
+```c
 message    := (tag value)*
 
 tag        := (field << 3) bit-or wire_type;
@@ -47,46 +47,46 @@ packed     := varint* | i32* | i64*,
 
 ## 注释 
 
-```
+```c
 message := (tag value)*
 A message is encoded as a sequence of zero or more pairs of tags and values.
-message被编码为0个或者多个tag-value数据对。
+//message被编码为0个或者多个tag-value数据对。
 
 tag := (field << 3) bit-or wire_type
 A tag is a combination of a wire_type, stored in the least significant three bits, and the field number that is defined in the .proto file.
-tab被编码为fied_number + wire_type，其中，低3位用来描述wire_type，其它的高位用来表示field_number。field_number具体需要占用几个二进制位，是根据number的大小决定的。如果比较小，则，tag只需要一个字节，否则需要多个字节来表示。
+//tab被编码为fied_number + wire_type，其中，低3位用来描述wire_type，其它的高位用来表示field_number。field_number具体需要占用几个二进制位，是根据number的大小决定的。如果比较小，则，tag只需要一个字节，否则需要多个字节来表示。
 
 value := varint for wire_type == VARINT, ...
 A value is stored differently depending on the wire_type specified in the tag.
-value的长度是是取决于wire_type和具体的数据长度。对于可变整形，使用VARINT表示。对于需要注明后续数据长度的数据，比如字符串，则使用TLV的形式表示。TLV = tag length value，tag就是前面提到的tag，length则表示了v的具体占用字节数。所以，在TLV形式的数据中，这里value==LV。
+//value的长度是是取决于wire_type和具体的数据长度。对于可变整形，使用VARINT表示。对于需要注明后续数据长度的数据，比如字符串，则使用TLV的形式表示。TLV = tag length value，tag就是前面提到的tag，length则表示了v的具体占用字节数。所以，在TLV形式的数据中，这里value==LV。
 
 varint := int32 | int64 | uint32 | uint64 | bool | enum | sint32 | sint64
 You can use varint to store any of the listed data types.
-可变整型数可以表示的数据类型包括32、64位有无符号整形，bool和enum都是可以表示的。
+//可变整型数可以表示的数据类型包括32、64位有无符号整形，bool和enum都是可以表示的。
 
 i32 := sfixed32 | fixed32 | float
 You can use fixed32 to store any of the listed data types.
-也许为了考虑到精度问题，i32表示直接是32个二进制位表示数据。也就表示这，这类数据不会被压缩。
+//也许为了考虑到精度问题，i32表示直接是32个二进制位表示数据。也就表示这，这类数据不会被压缩。
 
 i64 := sfixed64 | fixed64 | double
 You can use fixed64 to store any of the listed data types.
-与i32同理。
+//与i32同理。
 
 len-prefix := size (message | string | bytes | packed)
 A length-prefixed value is stored as a length (encoded as a varint), and then one of the listed data types.
-长度前缀，在表示message、string、bytes、packed时都需要指定数据的长度。
+//长度前缀，在表示message、string、bytes、packed时都需要指定数据的长度。
 
 string := valid UTF-8 string (e.g. ASCII)
 As described, a string must use UTF-8 character encoding. A string cannot exceed 2GB.
-string默认采用UTF-8表示，且，长度不能超过2GB。
+//string默认采用UTF-8表示，且，长度不能超过2GB。
 
 bytes := any sequence of 8-bit bytes
 As described, bytes can store custom data types, up to 2GB in size.
-与string相同。
+//与string相同。
 
 packed := varint* | i32* | i64*
 Use the packed data type when you are storing consecutive values of the type described in the protocol definition. The tag is dropped for values after the first, which amortizes the costs of tags to one per field, rather than per element.
-表示将数据打包，对于连续相同类型的数据内容，除了第一个数据指定数据格式外，后续的数据沿用第一个数据的数据格式，从而可以节省空间，打包格式在proto3中是默认的。
+//表示将数据打包，对于连续相同类型的数据内容，除了第一个数据指定数据格式外，后续的数据沿用第一个数据的数据格式，从而可以节省空间，打包格式在proto3中是默认的。
 ```
 
 # 一个简单的例子
@@ -161,7 +161,7 @@ ZigZag编码：对于一个非负整数n，使用2、*n表示，对于一个负�
 
 即上面提到的LEN可以表示为`embedded messages`，这种机制支持嵌套的message。那么，7后面的数字将以一个全新的自定义数据类型进行解析。
 
-```
+```proto
 message Test3 {
   optional Test1 c = 3;
 }
@@ -175,7 +175,7 @@ proto3默认全部字段都是Optional类型的，我们不需要在.proto文件
 
 对于repeated的字段，默认的编码方式是，有几个数据，字段名称就出现几次：
 
-```
+```proto
 message Test4 {
   optional string d = 4;
   repeated int32 e = 5;
@@ -213,7 +213,7 @@ message Test4 {
 
 其实Maps仅仅是repeated字段的其中一种表示形式：
 
-```
+```proto
 message Test6 {
   map<string, int32> g = 7;
 }
@@ -221,7 +221,7 @@ message Test6 {
 
 实际会被表示为：
 
-```
+```proto
 message Test6 {
   message g_Entry {
     optional string key = 1;
