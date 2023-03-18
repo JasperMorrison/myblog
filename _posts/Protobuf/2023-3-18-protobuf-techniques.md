@@ -29,12 +29,12 @@ protobuf对大文件操作不友好，它在解析的时候，需要将所有数
 
 # message的自描述性
 
-`Self-describing Messages`，指的是在解析端，不需要对应的.proto文件，就可以从二进制数据流中解析出protobuf结构体。
+`Self-describing Messages`，指的是在解析端，不需要对应的.proto文件，就可以从二进制数据流中解析出protobuf message object。
 
 proto支持这样做，但是，这个功能并不包含在默认的protobuf库中，因为，我们没有发现有人需要这样用。
 
 
-```
+```protobuf
 syntax = "proto3";
 
 import "google/protobuf/any.proto";
@@ -57,8 +57,8 @@ By using classes like DynamicMessage (available in C++ and Java), you can then w
 
 我翻译为“字段存在性”，它表述了一个protobuf field是否存在value的概念。存在性有两种说法：
 
-- 1. no presence，代表有没有值，从值的"有没有"单纯考虑
-- 2. explicit presence，除了"有没有"值，还表述了是有调用过API设置过字段的值
+- no presence，代表有没有值，从值的"有没有"单纯考虑
+- explicit presence，除了"有没有"值，还表述了是有调用过API设置过字段的值
 
 大片的英文解释就不翻译了，总得来说，它在思考要不要字段默认值的问题。
 
