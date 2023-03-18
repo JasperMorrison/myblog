@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Protobuf（二）：编码原理
-categories: protobuf
-tags: protobuf encoding
+categories: Protobuf
+tags: Protobuf encoding
 author: Jasper
 ---
 
