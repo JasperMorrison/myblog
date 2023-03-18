@@ -248,3 +248,6 @@ FingerPrint(foo.SerializeAsString()) == FingerPrint(foo.SerializeAsString())
 ```
 - 新旧协议对同一个proto对象的编码方式也是不相同的。
 
+# 参考
+
+[https://protobuf.dev/programming-guides/encoding/](https://protobuf.dev/programming-guides/encoding/)
