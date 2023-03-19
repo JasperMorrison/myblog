@@ -171,7 +171,7 @@ message Test3 {
 
 # Optional and Repeated Elements
 
-proto3默认全部字段都是Optional类型的，我们不需要在.proto文件中指定。optional的字段，编码起来是非常简单的，如果它不存在，我们直接不对其进行编码即可。解析端如果找不到这个字段的数据，则会赋予一个默认值。
+proto3默认全部字段都是Optional类型（其实是singular，具体区别见《Field Presence》相关内容）的，我们不需要在.proto文件中指定。optional的字段，编码起来是非常简单的，如果它不存在，我们直接不对其进行编码即可。解析端如果找不到这个字段的数据，则会赋予一个默认值。
 
 对于repeated的字段，默认的编码方式是，有几个数据，字段名称就出现几次：
 
