@@ -70,7 +70,7 @@ private void doDump(FileDescriptor fd, PrintWriter pw, String[] args, boolean us
 
 编译完成后，会在`out/soong/.i*/`目录下的相同相对路径中找到生成的c++源码或者java包，参考着完成你的业务编码。
 
-# 我什么选择在Binder通信中使用protobuf
+# 我为什么选择在Binder通信中使用protobuf
 
 Binder通信并不是重点，跨模块才是重点。当我们与其它业务组或者部门进行跨模块对接时，在使用protobuf是一件非常哇塞的做法。类比与微服务的开发理念，借助protobuf，可以实现具备超强前后兼容性的接口，为后续的升级维护打下很好的基础。
 
