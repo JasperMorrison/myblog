@@ -72,7 +72,7 @@ private void doDump(FileDescriptor fd, PrintWriter pw, String[] args, boolean us
 
 # 我为什么选择在Binder通信中使用protobuf
 
-Binder通信并不是重点，跨模块才是重点。当我们与其它业务组或者部门进行跨模块对接时，在使用protobuf是一件非常哇塞的做法。类比与微服务的开发理念，借助protobuf，可以实现具备超强前后兼容性的接口，为后续的升级维护打下很好的基础。
+Binder通信并不是重点，跨模块才是重点。当我们与其它业务组或者部门进行跨模块对接时，在使用protobuf是一个非常哇塞的做法。类比与微服务的开发理念，借助protobuf，可以实现具备超强前后兼容性的接口，为后续的升级维护打下很好的基础。
 
 # 参考
 
