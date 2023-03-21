@@ -50,7 +50,7 @@ private void doDump(FileDescriptor fd, PrintWriter pw, String[] args, boolean us
 
 # Binder通信中protobuf会多一次copy
 
-正如上一小节的内容，由于先序列化到byte[]，在Binder通信时，需要copy到Parcel关联的buffer中。
+正如上一小节的内容，由于先序列化到byte[]，在Binder通信时，需要copy到Parcel关联的buffer中。那么如何避免这次copy呢？
 
 思路一：我们自定义一个类继承自Parcelable，然后在writeToParcel()接口中，执行protobuf的编码。而具体的编码过程，需要仿照ProtoOutputStream做一个。
 
