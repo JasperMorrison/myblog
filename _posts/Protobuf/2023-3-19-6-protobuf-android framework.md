@@ -54,7 +54,7 @@ private void doDump(FileDescriptor fd, PrintWriter pw, String[] args, boolean us
 
 思路一：我们自定义一个类继承自Parcelable，然后在writeToParcel()接口中，执行protobuf的编码。而具体的编码过程，需要仿照ProtoOutputStream做一个。
 
-思路二：如果输入发生在C++中，我们可以将Parcel的data属性强制去除const属性，然后传给protobuf的SerializeToArray().
+思路二：如果输入发生在C++中，我们可以将Parcel的data指针强制去除const属性，然后传给protobuf的SerializeToArray().
 
 思路三：直接使用共享内存；
 
