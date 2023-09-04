@@ -1,0 +1,37 @@
+<mxfile host="app.diagrams.net" modified="2023-09-01T13:44:03.718Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" etag="ZYSoUTjBWd4ne8nEzuR7" version="21.7.2" type="device">
+  <diagram name="第 1 页" id="QQucarV1HdTiYy8BaOMb">
+    <mxGraphModel dx="989" dy="523" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="M1pufOp-37nRRUDhL_i7-2" value="IBinder" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="M1pufOp-37nRRUDhL_i7-3" value="Binder" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="M1pufOp-37nRRUDhL_i7-4" value="IBinder" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="M1pufOp-37nRRUDhL_i7-5" value="Binder" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="M1pufOp-37nRRUDhL_i7-6" value="Proxy" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="140" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="M1pufOp-37nRRUDhL_i7-7" value="Stub" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="140" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="M1pufOp-37nRRUDhL_i7-8" value="IBinder" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="400" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="M1pufOp-37nRRUDhL_i7-9" value="Binder" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="490" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="M1pufOp-37nRRUDhL_i7-10" value="MyBinder" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="585" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
