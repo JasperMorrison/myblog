@@ -13,16 +13,16 @@ author: Jasper
 
 
 
-# 需求描述
+# 1. 需求描述
 
 假设穿越到过去，那时还没有Android，要你实现一个当今的Android Binder。
 
-# 需求分析
+# 2. 需求分析
 
 1. 提供统一的IBinder接口；
 2. 跨进程传递对象；
 
-# 任务拆解
+# 3. 任务拆解
 
 1. 使用IBinder表示对象，并完成对象的转换；
 2. 设计IBinder统一接口；
@@ -31,13 +31,13 @@ author: Jasper
 5. 对象生命周期管理；
 6. 多线程支持；
 
-# 方案描述
+# 4. 方案描述
 
 1. Binder方案中，IBinder是统一的接口，代表着对象，我们可以通过IBinder来引用跨进程对象，同时调用跨进程对象的方法。
 2. 使用ServiceManager（SM）对IBinder进行统一管理，其它进程可以通过SM获得系统中开发出来的IBinder（实名Binder）。
 3. 借助驱动来做桥梁，把必要的功能通过系统调用陷入到内核，主要功能包括：进程管理、数据传递、进程间同步、鉴权。
 
-# IBinder对象设计
+# 5. IBinder对象设计
 
 ![](/images/Android/binder/binder_object.png)
 
@@ -53,7 +53,7 @@ author: Jasper
 9. BinderProxy是在native层通过JNI创建的；（重点）
 10. 注意：数据结构并非严格一致，有的层次已经被我简化了；
 
-# IBinder接口设计
+# 6. IBinder接口设计
 
 IBinder接口的目的就是，将利用上述的IBinder对象进行跨进程数据传递;
 
@@ -71,7 +71,7 @@ Parcel是序列化的对象，Binder对象本身支持序列化，所以，Binde
 1. 实名Binder：进程与ServiceManager交互Binder对象，ServiceManager保存binder_ref；
 2. 匿名Binder：通过IBinder接口与Client交互Binder对象，Client可以通过IBinder接口来执行IPC；
 
-# ServiceManager（SM）设计
+# 7. ServiceManager（SM）设计
 
 __SM作为一个独立进程，让所有进程都可以找到它__
 
@@ -124,7 +124,7 @@ __SM管理IBinder__
 
 ![](/images/Android/binder/sm_binder_ref.png)
 
-# 对象的跨进程传输
+# 8. 对象的跨进程传输
 
 __通信线程__
 
@@ -313,7 +313,7 @@ IBinder传输时主要分为两种类型：
 1. BINDER_TYPE_BINDER：传递BBinder，在目标进程中创建binder_ref，并构建BpBinder
 2. BINDER_TYPE_HANDLE：传递BpBinder，在驱动中先找到binder_node，然后在目标进程中创建binder_ref，并构建BpBinder
 
-# IBinder的生命周期
+# 9. IBinder的生命周期
 
 我们这里仅讨论跨进程的IBinder的生命周期，假如一个IBinder被另一个进程引用后，是什么时候被引用和销毁的。
 
@@ -418,7 +418,7 @@ void BpBinder::onFirstRef()
 }
 ```
 
-# 多线程支持
+# 10. 多线程支持
 
 线程的增加： 
 
@@ -443,7 +443,7 @@ binder主线程：在App进程起来时，ProcessState会启动一个新的Threa
 
 binder驱动在read过程中，会查找目标线程是否有空闲线程，如有，唤醒其执行消息接收。
 
-# 参考
+# 11. 参考
 
 [源码：Android Binder 驱动 - kernel-android13-5.15-lts](http://www.aospxref.com/kernel-android13-5.15-lts/xref/drivers/android/)  
 [源码：Android Framework libbinder](http://www.aospxref.com/android-13.0.0_r3/xref/frameworks/native/libs/binder/)  
