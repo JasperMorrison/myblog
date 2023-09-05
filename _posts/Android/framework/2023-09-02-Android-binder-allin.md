@@ -9,7 +9,7 @@ author: Jasper
 * content
 {:toc}
 
-本文从顶层设计的思路入手，全面领悟Android Binder方案的设计与实现。将自己假想成一名为Google的程序员，如果要为Android实现一个类似Binder这样的IPC机制，怎么做。如果结合Binder的源码一起阅读，本文帮进行系统性总结的同时，还会给你一种豁然开朗的感觉。（本文基于Android13）
+本文从顶层设计的思路入手，领悟Android Binder方案的设计与实现。假想为一名Google程序员，要为Android实现一个类似Binder这样的IPC机制。如果对Binder的本质还不熟悉，结合Binder的源码一起阅读，本文帮进行系统性总结的同时，也许会有一种豁然开朗的感觉。（本文基于Android13）
 
 
 
@@ -24,7 +24,7 @@ author: Jasper
 
 # 3. 任务拆解
 
-1. 使用IBinder表示对象，并完成对象的转换；
+1. 使用IBinder表示对象；
 2. 设计IBinder统一接口；
 3. ServiceManager设计；
 4. 对象的跨进程传输；
@@ -47,7 +47,7 @@ author: Jasper
 3. 通过IBinder表示这个对象，使得Client端可以引用到这个对象，反之亦然；
 4. 进程在Kernel中使用binder_proc表示，进程每打开一次binder节点，都会创建一个binder_proc；（/dev/binder /dev/hwbinder /dev/vndbinder）
 5. IBinder（Server）对象使用binder_node来表示，这是唯一的；
-6. Client端使用desc来代表一个binder_node，desc属于Client进程的一个唯一binder_node编码，desc对进程是独立的；
+6. Client端使用desc来代表一个binder_node；
 7. desc又被表示为handle，除了kernel，其它地方都用handle代替desc；
 8. 每个进程维护一套自己的handle，其中，handle=0是全局唯一的，表示IServiceManager对象在内核中的binder_node；
 9. BinderProxy是在native层通过JNI创建的；（重点）
@@ -205,7 +205,7 @@ if (tr->target.handle) {
 }
 ```
 
-对于非SM的IBinder，与SM不同，它们先找到binder_ref。SM的binder_ref在增加引用计数的地方创建，而其它的binder_ref在往Parcel中写入Binder时创建。
+对于非SM的IBinder，与SM不同，它们先找到binder_ref。SM的binder_ref在增加引用计数的地方创建，而其它的binder_ref在通信时动态创建。
 
 SM的binder_ref创建：
 
@@ -437,11 +437,11 @@ binder主线程：在App进程起来时，ProcessState会启动一个新的Threa
 
 对于其它非App进程，一般会主动调用joinThreadPool()加入为binder线程。
 
-对于所有进程来说，主动调用joinThreadPool()创建的线程，都不会统计在binder线程的数量上，也就是这个binder线程池的线程计数不会因此而增加。
+对于所有进程来说，主动调用joinThreadPool()创建的线程，不计入线程池的线程数量限制。
 
 线程的选择：
 
-binder驱动在read过程中，会查找目标线程是否有空闲线程，如有，唤醒其执行消息接收。
+binder驱动在read过程中，会查找目标进程是否有空闲线程，如有，唤醒其执行消息接收。
 
 # 11. 参考
 
