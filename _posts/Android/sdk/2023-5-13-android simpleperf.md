@@ -110,7 +110,9 @@ try {
 
 主要使用`app_profiler.py`进行record。
 
-app record:`$ ./app_profiler.py -p simpleperf.example.cpp -a .SleepActivity`  
+app record 常用方法1：`$ ./app_profiler.py --pid <pid of process>`  
+
+app record 常用方法2:`$ ./app_profiler.py -p simpleperf.example.cpp -a .SleepActivity`  
 使用 -p 参数指定应用会先kill再启动应用
 
 -a：指定activity  
@@ -141,17 +143,32 @@ inferno：生成html版本的flamegraph的工具。
 # 6. view the profile
 
 1. Continuous PProf UI
-2. Firefox Profiler
+2. Firefox Profiler（推荐）
 3. FlameScope
 4. Differential FlameGraph
-5. Android Studio Profiler（推荐）
+5. Android Studio Profiler
 6. Simpleperf HTML Report
 7. Simpleperf Report Command Line
 8. Custom Report Interface（使用API自定义）
 
-最推崇使用Android Studio Profiler，类似trace的形式，展示每个函数的调用栈和调用时长，跟我们分析perfetto trace一样。
+**最推荐使用 Firefox Profiler**，它以Timeline的形式将整个时间范围内的活动展示出来，可以选定一个范围进行采样统计，或者显示某个函数在Timeline上的采样数据，还支持Timeline上的backtrace。
 
-将perf.data转换为Android Studio Profiler所支持的trace文件：  
+```shell
+./gecko_profile_generator.py -i perf.data | gzip > gecko-profile.json.gz
+```
+
+或者
+
+```shell
+./gecko_profile_generator.py -i perf.data > gecko-profile.json
+```
+
+然后将 gecko-profile.json 在[https://profiler.firefox.com/](https://profiler.firefox.com/)中打开：
+
+![](/images/Android/perf/firefox_profiler.png)
+
+
+**如果使用Android Studio Profiler**，将perf.data转换为Android Studio Profiler所支持的trace文件：  
 ```
 simpleperf report-sample --show-callchain --protobuf -i perf.data -o perf.trace
 或者：
@@ -161,7 +178,6 @@ simpleperf report-sample --show-callchain --protobuf -i perf.data -o perf.trace 
 打开trace文件：Android Studio -> Open File -> Open -> Select perf.trace
 
 ![](/images/Android/perf/android_studio_profiler_open_perf_trace.png)
-
 
 # 7. 参考
 
