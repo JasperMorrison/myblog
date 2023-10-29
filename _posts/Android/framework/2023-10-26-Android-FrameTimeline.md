@@ -9,7 +9,7 @@ author: Jasper
 * content
 {:toc}
 
-本文搞懂Android卡顿检测之FrameTimeline，包括很多概念的介绍，Jank检测方法及Jank类别，评估了该方法的准确性及卡顿检测的局限性。（本文基于Android 13，针对硬件绘制模式）
+本文搞懂Android卡顿检测之FrameTimeline，对很多概念进行了介绍，看懂trace图，从而可以熟悉Jank检测方法及Jank类别，进一步评估FrameTimeline的准确性及卡顿检测的局限性。（本文基于Android 13，针对硬件绘制模式）
 
 
 
