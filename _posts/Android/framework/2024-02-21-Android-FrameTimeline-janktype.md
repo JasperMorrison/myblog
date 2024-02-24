@@ -106,7 +106,7 @@ void SurfaceFrame::classifyJankLocked(int32_t displayFrameJankType, const Fps& r
         // 发生了Jank，看看有什么可以纠正的地方？
         if (mLastLatchTime != 0 && mPredictions.endTime <= mLastLatchTime) {
             // Buffer Stuffing.
-            // 如果预测的时间比上阀门的时间还要早（所谓上阀门，就是说送显了，即DisplayFrame commit的时间）
+            // 如果预测的时间比上阀门的时间还要早（所谓上阀门，就是说取Buffer的时间）
             // 说明，这一帧之前还有一帧有待显示，本帧不着急，很可能是Buffer没有申请到而延后
             // 这种做法有武断之处：的确有这种可能，但不一定全是Buffer Stuffing
             mJankType |= JankType::BufferStuffing;
