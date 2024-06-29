@@ -179,7 +179,23 @@ simpleperf report-sample --show-callchain --protobuf -i perf.data -o perf.trace 
 
 ![](/images/Android/perf/android_studio_profiler_open_perf_trace.png)
 
-# 7. 参考
+# 7. 对perfetto trace某一段采样
+
+参考：[sample_filter](http://www.aospxref.com/android-13.0.0_r3/xref/system/extras/simpleperf/doc/sample_filter.md)
+
+在同时抓取perf和trace之后，解析时指定进程/线程和时间：
+
+```
+PROCESS_BEGIN <pid> <begin_timestamp>
+PROCESS_END <pid> <end_timestamp>
+```
+
+```
+THREAD_BEGIN <tid> <begin_timestamp>
+THREAD_END <tid> <end_timestamp>
+```
+
+# 8. 参考
 
 [simpleperf](http://www.aospxref.com/android-13.0.0_r3/xref/system/extras/simpleperf/doc/)  
 [perf和火焰图使用方法](https://cloud.tencent.com/developer/beta/article/2245316)  
