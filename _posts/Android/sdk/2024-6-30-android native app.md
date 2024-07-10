@@ -14,13 +14,13 @@ Android native app 的工作方式，主要包括Activity创建、Java与Native�
 
 
 
-![](/images/android/sdk/android_native_app_bigpiture.png)
+![](/images/Android/sdk/android_native_app_bigpiture.png)
 
 # 1. 框架介绍
 
 ## 1.1 项目结构
 
-![](/images/android/sdk/android_native_app_files.png)
+![](/images/Android/sdk/android_native_app_files.png)
 
 ```c++
 cc_library_shared {
@@ -110,7 +110,7 @@ native app 的目的是进行native 渲染，得利用本地API完成Surface、E
 render：管理本地窗口、上下文和Surface，类比 RenderThread。  
 shader：OpenGL shader，创建工程，加载OpenGL Shader等等。
 
-render在完成渲染工作后，通过swapbuffer将Surface提交给SurfaceFlinger，完成渲染。
+render在完成渲染工作后，通过swapbuffer将Surface提交给SurfaceFlinger，进行合成显示。
 
 # 3. 参考
 
