@@ -22,7 +22,7 @@ Android native app 的工作方式，主要包括Activity创建、Java与Native�
 
 ![](/images/android/sdk/android_native_app_files.png)
 
-'''
+```c++
 cc_library_shared {
     name: "libgamecore_sample",
     srcs: [
@@ -40,19 +40,19 @@ android_app {
         "libgamecore_sample", # 把上面的库打包到apk中
     ],
 }
-'''
+```
 
 android_native_app_glue 静态库是NDK自动编译的，就像是一个粘合剂，将Java层的Activity与Native的android_app粘合起来。  
 直接使用android_native_app_glue.cpp和android_native_app_glue.h文件来进行编译也是可以的。
 
 同时，需要当前目录存放一个AndroidManifest.xml文件，核心内容如下：
 
-'''
+```java
 <activity android:name="android.app.NativeActivity"></activity>
     <!-- Tell NativeActivity the name of our .so -->
     <meta-data android:name="android.app.lib_name"
         android:value="gamecore_sample" />
-'''
+```
 
 1. 必须指定Activity为NativeActivity，否则无法创建
 2. 加载前面定义的库
