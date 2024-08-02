@@ -2,7 +2,7 @@
 layout: post
 title: Android与Kernel调度交互知识框架
 categories: Android
-tags: Android Kernel Sched EAS CFS EEVDF cpuset cpufreq
+tags: Android Kernel Sched EAS CFS EEVDF cpuset cpufreq walt pelt
 author: Jasper
 ---
 
