@@ -9,7 +9,7 @@ author: Jasper
 * content
 {:toc}
 
-分享一次向AOSP提交pathc的经验，个人开发者可能很难被merge，但重在参与。
+分享一次向AOSP提交patch的经验，个人开发者可能很难被merge，但重在参与。
 
 
 
