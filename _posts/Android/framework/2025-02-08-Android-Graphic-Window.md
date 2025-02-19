@@ -61,25 +61,25 @@ Feature有别于我们说的“系统Feature”所表示的某个系统功能，
 
 ---|---|---
 layer|Feature1|Feature2
-37|DisplayArea1|DisplayArea3|
 36|DisplayArea1|DisplayArea3|
-35|DisplayArea2|DisplayArea3|
+35|DisplayArea1|DisplayArea3|
+34|DisplayArea2|DisplayArea3|
 
-但是，Feature2会受Feature1的约束，Feature1在35层不连续了，Feature2就不能继续使用DisplayArea3来管理window了，改成：
+但是，Feature2会受Feature1的约束，Feature1在34层不连续了，Feature2就不能继续使用DisplayArea3来管理window了，改成：
 
 ---|---|---
 layer|Feature1|Feature2
-37|DisplayArea1|DisplayArea3|
 36|DisplayArea1|DisplayArea3|
-35|DisplayArea2|DisplayArea4|
+35|DisplayArea1|DisplayArea3|
+34|DisplayArea2|DisplayArea4|
 
-DisplayArea2也可以不存在，表示Feature1不需要作用于第35层layer，得到：
+DisplayArea2也可以不存在，表示Feature1不需要作用于第34层layer，得到：
 
 ---|---|---
 layer|Feature1|Feature2
-37|DisplayArea1|DisplayArea3|
 36|DisplayArea1|DisplayArea3|
-35||DisplayArea4|
+35|DisplayArea1|DisplayArea3|
+34||DisplayArea4|
 
 最终得到这样的树状结构： 
 
