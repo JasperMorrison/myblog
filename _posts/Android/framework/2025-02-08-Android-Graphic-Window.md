@@ -85,7 +85,7 @@ layer|Feature1|Feature2
 
 ![](/images/Android/framework/Android-DisplayArea-tree.png)
 
-在构建时，DisplayArea被PendingArea表示，完成后增加Leaf（真实的DisplayArea），并将PendingArea替换为它所属的Feature，最终会得到：
+在构建时，DisplayArea被PendingArea表示，完成后增加Leaf（真实的DisplayArea），并将PendingArea替换为DisplayArea，并显示为它所属的Feature，最终会得到：
 
 ![](/images/Android/framework/Android-DisplayArea-Feature-tree.png)
 
