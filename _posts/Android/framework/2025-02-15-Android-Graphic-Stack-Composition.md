@@ -2,7 +2,7 @@
 layout: post
 title: Android图形栈-合成概述
 categories: Android
-tags: Android Process
+tags: Android Composition
 author: Jasper
 ---
 
