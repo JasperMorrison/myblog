@@ -4,6 +4,7 @@ title: OpenClaw 接入飞书即时通讯指南
 categories: "AI"
 tags: OpenClaw 飞书 教程
 author: Jasper
+excerpt: "本文记录了将 OpenClaw 接入飞书的完整过程，包括安装、配置向导、大模型 API Key 设置、飞书应用创建，以及遇到的坑和解决方案。"
 ---
 
 * content
