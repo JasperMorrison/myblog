@@ -1,12 +1,4 @@
 ---
-
-* content
-{:toc}
-
-
-* content
-{:toc}
-
 layout: post
 title: "Android 开发：引用系统 libskia.so 进行硬件渲染"
 categories: "Android"
@@ -24,9 +16,7 @@ author: Jasper
 在做轻量级硬件渲染引擎的 POC 时，我们希望使用 Skia 的 API 来完成渲染工作。AOSP 中自带了 Skia 源码，通常以静态库形式存在。我们可以直接从 AOSP 编译出 libskia.so，跳过单独编译 Skia 仓库的繁琐过程，快速验证项目可行性。
 
 
-
-
-## 1. POC 原理概述
+## 2. POC 原理概述
 
 在深入具体步骤之前，先理解整个方案的原理：
 
@@ -56,7 +46,7 @@ author: Jasper
 3. **libGLESv2.so** 是 GPU 驱动接口，执行实际渲染命令
 4. **swapbuffers** 时，libEGL.so 会将渲染好的 Buffer 提交给 SurfaceFlinger
 
-## 1. 方案步骤
+## 3. 方案步骤
 
 整体方案分为五个步骤：
 
@@ -66,7 +56,7 @@ author: Jasper
 4. 给 Skia 绑定 OpenGL 上下文
 5. 编写渲染示例
 
-## 1. 第一步：在 AOSP 中编译 libskia.so
+## 4. 第一步：在 AOSP 中编译 libskia.so
 
 默认情况下，AOSP 编译的是 libskia.a（静态库）。我们需要修改编译配置，生成动态库。
 
@@ -85,7 +75,7 @@ make libskia -j8
 - 确保选择正确的 Android 版本分支，不同版本的 Skia API 可能有差异
 - 编译出的 so 需要与目标设备的 ABI 匹配（armeabi-v7a, arm64-v8a, x86, x86_64）
 
-## 1. 第二步：集成到工程
+## 5. 第二步：集成到工程
 
 ### 拷贝头文件
 
@@ -122,7 +112,7 @@ include_directories(${CMAKE_SOURCE_DIR}/jni/include)
 target_link_libraries(your_native_lib skia libGLESv2 libEGL)
 ```
 
-## 1. 第三步：允许三方应用链接系统 lib
+## 6. 第三步：允许三方应用链接系统 lib
 
 默认情况下，非系统应用无法链接系统级的动态库。我们需要在系统中"开绿灯"。
 
@@ -155,7 +145,7 @@ readelf -d libskia.so | grep NEEDED
 
 修改后需要重新编译系统镜像并刷机，这一步是必须的。
 
-## 1. 第四步：初始化 EGL/OpenGL 上下文
+## 7. 第四步：初始化 EGL/OpenGL 上下文
 
 这是整个方案的核心。我们需要将 Skia 绑定到 OpenGL 上下文，让 Skia 的 GPU 后端能够正常工作。
 
@@ -315,7 +305,7 @@ bool initialize(ANativeWindow* window, int width, int height) {
 └────────────────────────────────────────────────────────────────┘
 ```
 
-## 1. 第五步：渲染与 Buffer 提交
+## 8. 第五步：渲染与 Buffer 提交
 
 ### 渲染流程
 
@@ -390,7 +380,7 @@ void renderLoop() {
 }
 ```
 
-## 1. 完整项目参考
+## 9. 完整项目参考
 
 上述方案的完整实现可以参考开源项目：
 
@@ -398,7 +388,7 @@ void renderLoop() {
 
 该项目展示了如何在 Android 上将 Skia 与 OpenGL ES 结合使用，基本思路与本文一致。
 
-## 1. 总结
+## 10. 总结
 
 本文介绍了一种在 Android Studio 中引用系统 libskia.so 进行硬件渲染的 POC 方案：
 
