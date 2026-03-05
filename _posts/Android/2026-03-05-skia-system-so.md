@@ -17,9 +17,12 @@ Android 的 UI 渲染体系依赖于 Skia 图形库。在 AOSP 中，Skia 通常
 
 但如果我们想开发自己的渲染引擎，复用 Skia 的能力，就会遇到一个问题：**libhwui.so 隐藏了 Skia 的 public API**。我们无法直接调用那些被编译进 libhwui.so 中的 Skia 函数。
 
-一个思路是：从 libhwui.so 导出 Skia 的符号。但这需要全面的评估工作，涉及符号冲突、API 稳定性等复杂问题，不在本文讨论范围。
+最终方案：从 libhwui.so 导出 Skia 的符号，通过 libhwui.so 引用到 skia 的 API。这需要做全面的评估工作，涉及到符号冲突、API 稳定性等内容，不在本博客讨论范围。
 
-另一个思路是：**直接使用 AOSP 编译出的 libskia.so**。这就是本文要介绍的方法。
+POC 快速验证方案：为了快速验证项目（做 POC），我们采用一个加速方案——直接引用 AOSP 编译出的系统 libskia.so。这样做的好处是：
+1. **不需要编译 Skia 仓库** - AOSP 已自带 Skia，直接编译出 libskia.so 即可
+2. **验证周期短** - 跳过复杂的符号导出评估，快速验证可行性
+
 
 ## POC 原理概述
 
