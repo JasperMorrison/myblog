@@ -6,22 +6,11 @@ tags: Android Skia libhwui OpenGL HardwareRendering AOSP
 author: Jasper
 ---
 
-在做轻量级硬件渲染引擎的 POC 时，我们希望使用 Skia 的 API 来完成渲染工作。系统中的 libhwui.so 包含了编译好的 Skia，但它是作为静态库链接进去的，API 被隐藏了。本文将介绍一种绕过方案：直接引用 AOSP 编译出的系统 libskia.so，实现硬件渲染。
-
-
-
-
 ## 背景与动机
 
-Android 的 UI 渲染体系依赖于 Skia 图形库。在 AOSP 中，Skia 通常以静态库（libskia.a）的形式编译进 libhwui.so，供系统 UI 框架使用。
+有没有想过直接构建一个使用系统 Skia 进行 GPU 渲染的 APK 来快速验证项目？
 
-但如果我们想开发自己的渲染引擎，复用 Skia 的能力，就会遇到一个问题：**libhwui.so 隐藏了 Skia 的 public API**。我们无法直接调用那些被编译进 libhwui.so 中的 Skia 函数。
-
-最终方案：从 libhwui.so 导出 Skia 的符号，通过 libhwui.so 引用到 skia 的 API。这需要做全面的评估工作，涉及到符号冲突、API 稳定性等内容，不在本博客讨论范围。
-
-POC 快速验证方案：为了快速验证项目（做 POC），我们采用一个加速方案——直接引用 AOSP 编译出的系统 libskia.so。这样做的好处是：
-1. **不需要编译 Skia 仓库** - AOSP 已自带 Skia，直接编译出 libskia.so 即可
-2. **验证周期短** - 跳过复杂的符号导出评估，快速验证可行性
+在做轻量级硬件渲染引擎的 POC 时，我们希望使用 Skia 的 API 来完成渲染工作。AOSP 中自带了 Skia 源码，通常以静态库形式存在。我们可以直接从 AOSP 编译出 libskia.so，跳过单独编译 Skia 仓库的繁琐过程，快速验证项目可行性。
 
 
 ## POC 原理概述
