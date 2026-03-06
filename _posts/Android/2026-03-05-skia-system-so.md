@@ -1,17 +1,19 @@
 ---
 layout: post
-title: "Android 开发：引用系统 libskia.so 进行硬件渲染"
+title: "引用系统 libskia.so 进行硬件渲染"
 categories: "Android"
 tags: Android Skia libhwui OpenGL HardwareRendering AOSP
 author: Jasper
 ---
 
+有没有想过直接构建一个使用系统 Skia 进行 GPU 渲染的 APK 来快速验证项目？在做轻量级硬件渲染引擎的 POC 时，我们希望使用 Skia 的 API 来完成渲染工作。本文将介绍如何从 AOSP 编译 libskia.so 并集成到工程中，实现硬件加速渲染。
+
+
+
 * content
 {:toc}
 
 ## 1. 背景与动机
-
-有没有想过直接构建一个使用系统 Skia 进行 GPU 渲染的 APK 来快速验证项目？
 
 在做轻量级硬件渲染引擎的 POC 时，我们希望使用 Skia 的 API 来完成渲染工作。AOSP 中自带了 Skia 源码，通常以静态库形式存在。我们可以直接从 AOSP 编译出 libskia.so，跳过单独编译 Skia 仓库的繁琐过程，快速验证项目可行性。
 
